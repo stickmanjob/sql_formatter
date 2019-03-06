@@ -5,26 +5,22 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    stepCount: 0,
-    msg: '',
-    impression: '',
-    errorFlag: false
+    text: '',
+    outputText: ''
   },
   mutations: {
-    setStepCount (state) {
-      console.log('rootsetStepCount')
-      state.stepCount++
-      console.log(state.stepCount)
+    updateText (state, value) {
+      state.text = value
     }
   },
   getters: {
-    formatting (state, getters) {
-      state.msg = ''
-      var tmp = state.impression.split(' ')
+    formatting (state) {
+      state.outputText = ''
+      var tmp = state.text.split(' ')
       tmp.forEach((value, index, array) => {
-        state.msg = state.msg + value + '\n'
+        state.outputText = state.outputText + value + '\n'
       })
-      return state.msg
+      return state.outputText
     }
   },
   modules: {

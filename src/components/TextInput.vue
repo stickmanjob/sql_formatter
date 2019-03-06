@@ -1,15 +1,20 @@
 <template>
   <div>
-    <textarea name="" id="" cols="30" rows="10"></textarea>
+    <textarea v-model="text"></textarea>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'HelloWorld',
-  data () {
-    return {
-      msg: 'Welcome to Your Vue.js App'
+  name: 'TextInput',
+  computed: {
+    text: {
+      get () {
+        return this.$store.state.text
+      },
+      set (value) {
+        this.$store.commit('updateText', value)
+      }
     }
   }
 }

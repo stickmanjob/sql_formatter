@@ -1,15 +1,15 @@
 <template>
   <div>
-    <textarea name="" id="" cols="30" rows="10">aaa</textarea>
+    <textarea v-model="formatting"></textarea>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'HelloWorld',
-  data () {
-    return {
-      msg: 'Welcome to Your Vue.js App'
+  name: 'ResultOutput',
+  computed: {
+    formatting () {
+      return this.$store.getters.formatting
     }
   }
 }
