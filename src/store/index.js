@@ -5,18 +5,18 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    text: '',
+    inputText: '',
     outputText: ''
   },
   mutations: {
     updateText (state, value) {
-      state.text = value
+      state.inputText = value
     }
   },
   getters: {
     formatting (state) {
       state.outputText = ''
-      var tmp = state.text.split(' ')
+      var tmp = state.inputText.split(' ')
       /*
       var keyword = 'SELECT'
       */
@@ -57,6 +57,9 @@ export default new Vuex.Store({
         }
       })
       return state.outputText
+    },
+    getInputText (state) {
+      return state.inputText
     }
   },
   modules: {
