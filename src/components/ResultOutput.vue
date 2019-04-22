@@ -14,12 +14,21 @@ export default {
       var outputText = ''
       var breakDiv = true
       var spacedDiv = false
+      var indentCount = 0
       var keywords = {
-        equal: {value: '=', noBreakWords: ['#ANY'], spacedWords: []},
+        equal: {value: '=', noBreakWords: ['#ALL'], spacedWords: []},
+        openParentheses: {value: '(', noBreakWords: [], spacedWords: []},
+        closeParentheses: {value: ')', noBreakWords: ['AS'], spacedWords: []},
+        as: {value: 'AS', noBreakWords: ['#ALL'], spacedWords: []},
         select: {value: 'SELECT', noBreakWords: ['TOP', 'DISTINCT'], spacedWords: []},
         from: {value: 'FROM', noBreakWords: [], spacedWords: []},
-        where: {value: 'WHERE', noBreakWords: [], spacedWords: ['#ANY']},
-        top: {value: 'TOP', noBreakWords: ['#ANY'], spacedWords: []}
+        where: {value: 'WHERE', noBreakWords: [], spacedWords: ['#ALL']},
+        inner: {value: 'INNER', noBreakWords: ['JOIN'], spacedWords: ['#ALL']},
+        left: {value: 'LEFT', noBreakWords: ['OUTER', 'JOIN'], spacedWords: ['#ALL']},
+        outer: {value: 'OUTER', noBreakWords: ['JOIN'], spacedWords: []},
+        top: {value: 'TOP', noBreakWords: ['#ALL'], spacedWords: []},
+        full: {value: 'FULL', noBreakWords: ['OUTER', 'JOIN'], spacedWords: ['#ALL']},
+        others: {value: '#ALL', noBreakWords: ['=', 'AS'], spacedWords: []}
       }
       words.forEach((word, index, array) => {
         // 基本:単語毎に改行,行間は空けない
@@ -29,11 +38,10 @@ export default {
           // console.log(word + '\n')
           // console.log(keywords[keyword].value + '\n')
           // console.log(word === keywords[keyword].value)
-          if (word === keywords[keyword].value) {
-            console.log(keywords[keyword].spacedWords[0])
+          if (word === keywords[keyword].value || keywords[keyword].value === '#ALL') {
             for (let spacedWord of keywords[keyword].spacedWords) {
               // 前の単語が行間開ける語だった場合のみ追加で改行を行う
-              if (words[index - 1] === spacedWord || spacedWord === '#ANY') {
+              if (words[index - 1] === spacedWord || spacedWord === '#ALL') {
                 console.log('aaa')
                 spacedDiv = true
                 break
@@ -41,12 +49,23 @@ export default {
             }
             for (let noBreakWord of keywords[keyword].noBreakWords) {
               // 次の単語が改行禁止語だった場合のみループを抜けて改行しない
-              if (words[index + 1] === noBreakWord || noBreakWord === '#ANY') {
+              if (words[index + 1] === noBreakWord || noBreakWord === '#ALL') {
                 word = word + ' '
                 breakDiv = false
                 break
               }
             }
+          }
+        }
+        if (words[index] === '(') {
+          indentCount++
+        }
+        if (words[index + 1] === ')') {
+          indentCount--
+        }
+        if (indentCount > 0) {
+          for (var i = 0; i < indentCount; i++) {
+            words[index + 1] = '\t' + words[index + 1]
           }
         }
         if (spacedDiv) {
