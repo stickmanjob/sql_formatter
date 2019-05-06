@@ -1,8 +1,9 @@
 <template>
   <div>
     <h1>Home</h1>
+    <el-button type="primary" icon="el-icon-document-copy" @click="resultCopy">copy</el-button>
     <text-input></text-input>
-    <result-output></result-output>
+    <result-output ref="result"></result-output>
   </div>
 </template>
 
@@ -14,6 +15,11 @@ export default {
   data () {
     return {
       msg: 'Welcome to Your Vue.js App'
+    }
+  },
+  methods: {
+    resultCopy: function () {
+      this.$refs.result.resultCopy()
     }
   },
   components: {
