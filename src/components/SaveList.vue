@@ -1,7 +1,5 @@
 <template>
   <div>
-    <textarea id='input' v-model="text"></textarea>
-    <input type='text' v-model="val" v-test>
   </div>
 </template>
 
