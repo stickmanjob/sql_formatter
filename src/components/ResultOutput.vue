@@ -14,8 +14,8 @@ export default {
     },
     preFormatting: function (strValue) {
       // 入力文字を半角スペース区切りで配列に格納(タブ、連続する半角スペース、改行は削除)
-      console.log()
-      return strValue.replace(/\r?\n+/g, ' ').replace(/\t/, ' ').replace(/\s{2,}/, ' ').split(' ')
+      console.log(strValue.replace(/\r?\n+/g, ' ').replace(/\t/g, ' ').replace(/\s{2,}/g, ' '))
+      return strValue.replace(/\r?\n+/g, ' ').replace(/\t/g, ' ').replace(/\s{2,}/g, ' ').split(' ')
     },
     // インデント調整
     indentFormatting: function (sentences) {
